@@ -1,7 +1,4 @@
-
-# AEDsIII - TP03
-
-
+# AEDsIII - TP02
 ## Rotinas Implementadas
 - Implementação de um algoritmo de busca de livros a partir de uma lista invertida;
 - Implementação de rotina de normalização de texto (letras minúsculas e sem acento);
@@ -18,6 +15,5 @@
 - O trabalho está completo?
 - O trabalho é original e não a cópia de um trabalho de um colega? **Sim**
 ## Autores
-
 - [@Marcal08](https://www.github.com/Marcal08)
 - [@PRMaia](https://www.github.com/PRMaia)
