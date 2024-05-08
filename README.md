@@ -15,5 +15,7 @@
 - O trabalho está completo?
 - O trabalho é original e não a cópia de um trabalho de um colega? **Sim**
 ## Autores
+- [@fabioacandrade](https://www.github.com/fabioacandrade)
+- [@LucasAlkmimBarros](https://www.github.com/LucasAlkmimBarros)
 - [@Marcal08](https://www.github.com/Marcal08)
 - [@PRMaia](https://www.github.com/PRMaia)
