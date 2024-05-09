@@ -11,7 +11,7 @@
 - A remoção de um livro gera a remoção dos termos do seu título na lista invertida? **Sim**
 - Há uma busca por palavras que retorna os livros que possuam essas palavras? **Sim**
 - Essa busca pode ser feita com mais de uma palavra? **Sim**
-- As stop words foram removidas de todo o processo? 
+- As stop words foram removidas de todo o processo? **Sim**
 - Que modificação, se alguma, você fez para além dos requisitos mínimos desta tarefa? **Tratamento de palavras repetidas nos títulos**
 - O trabalho está funcionando corretamente? **Sim**
 - O trabalho está completo? **Sim**
