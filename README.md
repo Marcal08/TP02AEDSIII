@@ -1,7 +1,10 @@
 # AEDsIII - TP02
 ## Rotinas Implementadas
-- Implementação de um algoritmo de busca de livros a partir de uma lista invertida;
-- Implementação de rotina de normalização de texto (letras minúsculas e sem acento);
+- Implementação de um algoritmo de busca de livros a partir de uma lista invertida:
+    - buscarLivroLista(): Método que busca um livro na lista invertida a partir das palavras digitadas pelo usuário.
+- Implementação de rotina de normalização de texto (letras minúsculas e sem acento):
+    - SemAcento(): Método de retirada dos acentos das palavras inseridas/digitadas.
+    - .toLowerCase(): Método nativo do java para deixar as palavras em letras minúsculas.
 - Ajuste dos códigos de criação, atualização e exclusão na classe ArquivoLivros para flexibilidade com a lista flexível e controle das stopWords:
     - HashSet STOPWORDS: Conjunto de dados do tipo Hash que armazena diversas stopwords.
     - create(): Método responsável por adicionar um novo livro à base de dados e atualizar a lista invertida com os termos presentes no novo registro.
