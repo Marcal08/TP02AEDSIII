@@ -1,6 +1,9 @@
 package arquivos;
 
 import java.text.Normalizer;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import aeds3.Arquivo;
@@ -26,6 +29,17 @@ public class ArquivoLivros extends Arquivo<Livro> {
 
   }
 
+  private static final Set<String> STOPWORDS = new HashSet<>(Arrays.asList(
+      "a", "ao", "aos", "aquela", "aquelas", "aquele", "aqueles", "aquilo", "as", "até", "com", "como", "da", "das",
+      "de", "dela", "delas", "dele", "deles", "depois", "do", "dos", "e", "ela", "elas", "ele", "eles", "em", "entre",
+      "era", "eram", "essa", "essas", "esse", "esses", "esta", "estamos", "estas", "estava", "estavam", "este",
+      "esteja", "estejam", "estejamos", "estes", "estou", "eu", "foi", "fomos", "for", "foram", "fosse", "fossem",
+      "haja", "hajam", "hajamos", "hão", "isso", "isto", "já", "lhe", "lhes", "mais", "mas", "me", "mesmo", "meu",
+      "meus", "minha", "minhas", "na", "nas", "nem", "no", "nos", "nós", "nossa", "nossas", "nosso", "nossos", "num",
+      "numa", "o", "os", "ou", "para", "pela", "pelas", "pelo", "pelos", "por", "qual", "quando", "que", "quem", "se",
+      "seja", "sejam", "sejamos", "sem", "só", "sua", "suas", "são", "também", "te", "tem", "tenha", "tenham",
+      "tenhamos", "teu", "teus", "tu", "tua", "tuas", "um", "uma", "você", "vocês"));
+
   public static String semAcento(String str) {
     String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
     Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
@@ -37,8 +51,10 @@ public class ArquivoLivros extends Arquivo<Livro> {
     ListaInvertida li = new ListaInvertida(4, "dados/dicionario.listainv.db", "dados/blocos.listainv.db");
     int id = super.create(obj);
     String[] palavras = semAcento(obj.getTitulo().toLowerCase()).split(" ");
-    for (String palavra : palavras)
-      li.create(palavra, id);
+    for (String palavra : palavras) {
+      if (!STOPWORDS.contains(palavra))
+        li.create(palavra, id);
+    }
     obj.setID(id);
     indiceIndiretoISBN.create(new ParIsbnId(obj.getIsbn(), obj.getID()));
     relLivrosDaCategoria.create(new ParIntInt(obj.getIdCategoria(), obj.getID()));
@@ -60,12 +76,13 @@ public class ArquivoLivros extends Arquivo<Livro> {
     if (obj != null)
       if (indiceIndiretoISBN.delete(ParIsbnId.hashIsbn(obj.getIsbn()))
           &&
-          relLivrosDaCategoria.delete(new ParIntInt(obj.getIdCategoria(), obj.getID()))){
-            String[] palavras = semAcento(obj.getTitulo().toLowerCase()).split(" ");
-            for (String palavra : palavras)
-              li.delete(palavra, id);
-            return super.delete(id);
-          }
+          relLivrosDaCategoria.delete(new ParIntInt(obj.getIdCategoria(), obj.getID()))) {
+        String[] palavras = semAcento(obj.getTitulo().toLowerCase()).split(" ");
+        for (String palavra : palavras)
+          if (!STOPWORDS.contains(palavra))
+            li.delete(palavra, id);
+        return super.delete(id);
+      }
     return false;
   }
 
@@ -91,9 +108,11 @@ public class ArquivoLivros extends Arquivo<Livro> {
       String[] palavrasAntigas = semAcento(livroAntigo.getTitulo().toLowerCase()).split(" ");
       String[] palavrasNovas = semAcento(novoLivro.getTitulo().toLowerCase()).split(" ");
       for (String palavra : palavrasAntigas)
-        li.delete(palavra, novoLivro.getID());
+        if (!STOPWORDS.contains(palavra))
+          li.delete(palavra, novoLivro.getID());
       for (String palavra : palavrasNovas)
-        li.create(palavra, novoLivro.getID());
+        if (!STOPWORDS.contains(palavra))
+          li.create(palavra, novoLivro.getID());
       return super.update(novoLivro);
     }
     return false;
