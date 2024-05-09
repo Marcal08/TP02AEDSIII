@@ -40,7 +40,7 @@ public class MenuLivros {
     String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
     Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
     return pattern.matcher(nfdNormalizedString).replaceAll("");
-}
+  }
   // ---------------------
   // LE_LIVRO
   // ---------------------
@@ -90,6 +90,11 @@ public class MenuLivros {
   // MOSTRA_LIVRO
   // ---------------------
   public void mostraLivro(Livro l) throws Exception {
+    if(l==null)
+    {
+      System.out.println("Livro não encontrado");
+      return;
+    }
     Categoria c = arqCategorias.read(l.getIdCategoria());
     String nomeCategoria = c == null ? "Categoria inválida" : c.getNome();
     System.out.println(
@@ -264,15 +269,15 @@ public void buscarLivroLista() throws Exception
   int tam = array.length;
   
   int[] dados;
-  ArrayList<Integer> teste = new ArrayList<>();
+  ArrayList<Integer> arrayListaID = new ArrayList<>();
   for(int i =0; i<tam; i++)
   {
     dados= lista.read(array[i]);
     int tam2 = dados.length;
     for(int j =0; j<tam2; j++)
-      teste.add(dados[j]);
+      arrayListaID.add(dados[j]);
   }
-  teste.stream().distinct().forEach(x -> {
+  arrayListaID.stream().distinct().forEach(x -> {
     try {
       
       mostraLivro(arqLivros.read(x));
